@@ -69,13 +69,3 @@ with open(budget_csv) as csvfile:
             print(string)
             pybank.write(string)
             pybank.write('\n')
-    
-
-
-#    print("Financial Analysis")
-#    print("----------------------------")
-#    print(f'Total Months: {count_of_rows}')
-#    print(f'Total: {total_profit}')
-#    print(f'Average Change: ${round((profit_end - profit_start)/(count_of_rows - 1), 2)}')
-#    print(f'Greatest Increase in Profits: {max_month} (${max(profit_difference)})')
-#    print(f'Greatest Decrease in Profits: {min_month} (${min(profit_difference)})')
