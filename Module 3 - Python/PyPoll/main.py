@@ -39,19 +39,35 @@ n_votes = sum(cand_votes)
 # The next 3 items are the individual candidate names, number of votes, and percent of vote.
 # The next item is the separator before announcing the winner. The next item announces the
 # winner, and the last item is the separator.
-output_file = ["Election Results", "-------------------------", \
-    f"Total Votes: {n_votes}", "-------------------------", \
-    f"{candidates[0]}: {round(100 * cand_votes[0] / n_votes, 3)}% ({cand_votes[0]})", \
-    f"{candidates[1]}: {round(100 * cand_votes[1] / n_votes, 3)}% ({cand_votes[1]})", \
-    f"{candidates[2]}: {round(100 * cand_votes[2] / n_votes, 3)}% ({cand_votes[2]})", \
-    "-------------------------", \
+
+
+# The output_file_start is the first 4 rows of the output file to print.
+output_file_start = ["Election Results", "-------------------------", \
+    f"Total Votes: {n_votes}", "-------------------------"]
+# The outpyut_file_end is the last 4 rows of the output file.
+output_file_end = ["-------------------------", \
     f"Winner: {candidates[cand_votes.index(max(cand_votes))]}", \
     "-------------------------"]
 
+# This is the output path, relative to the python file.
 output_path = os.path.join("Analysis", "pypoll.txt")
 
+# I originally had all 10 rows of the output part of one list to print below. Instead, I've changed it so 
+# that it will work for any number of candidates, and not just 3.
+
 with open(output_path, "w") as pypath:
-    for item in output_file:
+    # This writes out the initial lines to the output file
+    for item in output_file_start:
+        print(item)
+        pypath.write(item)
+        pypath.write('\n')
+    # This writes out the candidates, their percent of votes cast, and the number of votes.
+    for candidate in candidates:
+        print(f"{candidate}: {round(100 * cand_votes[candidates.index(candidate)] / n_votes, 3)}% ({cand_votes[candidates.index(candidate)]})")
+        pypath.write(f"{candidate}: {round(100 * cand_votes[candidates.index(candidate)] / n_votes, 3)}% ({cand_votes[candidates.index(candidate)]})")
+        pypath.write('\n')
+    # This writes out the ending lines to the output file
+    for item in output_file_end:
         print(item)
         pypath.write(item)
         pypath.write('\n')
