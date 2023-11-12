@@ -20,9 +20,8 @@ with open(election_csv) as csvfile:
     cand_votes = []
 
     # This will iterate through the csv.reader file once and will add the candidate name to the 
-    # candidates list if it's not there already. When a new candidate is found, it will append 1 vote
-    # to the cand_votes list and then each time that candidate is found after, it will add one more vote
-    # to the cand_votes total for that candidate.
+    # candidates list if it's not there already and add a new item in the cand_votes list, giving their 1st vote.
+    # Each time that candidate is found after, it will add one more vote to the cand_votes count for that candidate.
     for row in csvreader:
         if row[2] not in candidates:
             candidates.append(row[2])
@@ -33,14 +32,6 @@ with open(election_csv) as csvfile:
 # This calculates the total number of votes
 n_votes = sum(cand_votes)
 
-# This is a list I created to be able to print to the terminal and the file at the same time.
-# The first 2 items are the header text and separator in the text file. The next 2 are the 
-# total number of votes and the separator before the individual candidate stats.
-# The next 3 items are the individual candidate names, number of votes, and percent of vote.
-# The next item is the separator before announcing the winner. The next item announces the
-# winner, and the last item is the separator.
-
-
 # The output_file_start is the first 4 rows of the output file to print.
 output_file_start = ["Election Results", "-------------------------", \
     f"Total Votes: {n_votes}", "-------------------------"]
@@ -49,13 +40,13 @@ output_file_end = ["-------------------------", \
     f"Winner: {candidates[cand_votes.index(max(cand_votes))]}", \
     "-------------------------"]
 
+# I originally had all 10 rows of the output file in one list to print below. Instead, I've changed it so 
+# that it will work for any number of candidates, and not just 3.
+
 # This is the output path, relative to the python file.
 output_path = os.path.join("Analysis", "pypoll.txt")
 
-# I originally had all 10 rows of the output part of one list to print below. Instead, I've changed it so 
-# that it will work for any number of candidates, and not just 3.
-
-# Zipping the candidate name and their count of the votes here so the callback for the print it easier. :)
+# Zipping the candidate name and their count of the votes here so the callback for the print is easier. :)
 
 zipped = zip(candidates,cand_votes)
 
@@ -67,8 +58,8 @@ with open(output_path, "w") as pypath:
         pypath.write('\n')
     # This writes out the candidates, their percent of votes cast, and the number of votes.
     for item in zipped:
-        print(f"{item[0]}: {round(100 * item[1] / n_votes, 3)}")
-        pypath.write(f"{item[0]}: {round(100 * item[1] / n_votes, 3)}")
+        print(f"{item[0]}: {round(100 * item[1] / n_votes, 3)}% ({item[1]})")
+        pypath.write(f"{item[0]}: {round(100 * item[1] / n_votes, 3)}% ({item[1]})")
         pypath.write('\n')
     # This writes out the ending lines to the output file
     for item in output_file_end:
