@@ -55,6 +55,10 @@ output_path = os.path.join("Analysis", "pypoll.txt")
 # I originally had all 10 rows of the output part of one list to print below. Instead, I've changed it so 
 # that it will work for any number of candidates, and not just 3.
 
+# Zipping the candidate name and their count of the votes here so the callback for the print it easier. :)
+
+zipped = zip(candidates,cand_votes)
+
 with open(output_path, "w") as pypath:
     # This writes out the initial lines to the output file
     for item in output_file_start:
@@ -62,9 +66,9 @@ with open(output_path, "w") as pypath:
         pypath.write(item)
         pypath.write('\n')
     # This writes out the candidates, their percent of votes cast, and the number of votes.
-    for candidate in candidates:
-        print(f"{candidate}: {round(100 * cand_votes[candidates.index(candidate)] / n_votes, 3)}% ({cand_votes[candidates.index(candidate)]})")
-        pypath.write(f"{candidate}: {round(100 * cand_votes[candidates.index(candidate)] / n_votes, 3)}% ({cand_votes[candidates.index(candidate)]})")
+    for item in zipped:
+        print(f"{item[0]}: {round(100 * item[1] / n_votes, 3)}")
+        pypath.write(f"{item[0]}: {round(100 * item[1] / n_votes, 3)}")
         pypath.write('\n')
     # This writes out the ending lines to the output file
     for item in output_file_end:
