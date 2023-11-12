@@ -50,10 +50,10 @@ with open(budget_csv) as csvfile:
     min_month = month[profit_difference.index(min(profit_difference))]
     
     # This is a list I created to be able to print to the terminal and the file at the same time
-    # The first 2 items in the list are the header text and separator in the text file. The next two items are the total number of months and total profit
-    # The third item calculates the average profit by taking the difference between profit_end profit_start, then dividing by the count of months in the months list
-        # which is 1 month less than the total number of months.
-    # The last two items are the greatest increase and decrease in profits, but getting the months that have the max and min profit_difference, and print that difference.
+    # The first 2 items in the list are the header text and separator in the text file. The next two items are the total number of
+    # months and total profit. The third item calculates the average profit by taking the difference between profit_end profit_start, 
+    # then dividing by the count of months in the months list which is 1 month less than the total number of months.
+    # The last two items are the greatest increase and decrease in profits, and getting the months that have the max and min profit_difference, and print that difference.
     output_file = ["Financial Analysis", "----------------------------", \
         f'Total Months: {count_of_months}', f'Total: {total_profit}', \
         f'Average Change: ${round((profit_end - profit_start)/(len(month)), 2)}', \
